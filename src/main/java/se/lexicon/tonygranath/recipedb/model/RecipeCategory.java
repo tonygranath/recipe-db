@@ -53,6 +53,20 @@ public class RecipeCategory {
 	public void setRecipes(Set<Recipe> recipes) {
 		if (recipes == null)
 			recipes = new HashSet<>();
-		this.recipes = recipes;
+		for(Recipe r : recipes) {
+			addRecipe(r);
+		}
+	}
+
+	public void addRecipe(Recipe recipe) {
+		if (recipe == null)
+			throw new IllegalArgumentException("recipe was null.");
+		recipes.add(recipe);
+	}
+
+	public void removeRecipe(Recipe recipe) {
+		if (recipe == null)
+			throw new IllegalArgumentException("recipe was null.");
+		recipes.remove(recipe);
 	}
 }

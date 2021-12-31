@@ -1,7 +1,6 @@
 package se.lexicon.tonygranath.recipedb.model;
 
 import org.hibernate.annotations.*;
-import se.lexicon.tonygranath.recipedb.database.RecipeIngredientRepository;
 import se.lexicon.tonygranath.recipedb.model.constants.EntityConstants;
 
 import javax.persistence.*;
@@ -82,6 +81,7 @@ public class Recipe {
 		if (ingredients == null) {
 			ingredients = new ArrayList<>();
 		}
+		this.ingredients = new ArrayList<>();
 		for(RecipeIngredient i : ingredients) {
 			i.setRecipe(this);
 			addIngredient(i);
@@ -109,9 +109,19 @@ public class Recipe {
 		this.instruction = instruction;
 	}
 
+	public void addCategory(RecipeCategory category) {
+		if (category == null)
+			throw new IllegalArgumentException("category was null.");
+		categories.add(category);
+	}
+
+	public void removeCategory(RecipeCategory category) {
+		if (category == null)
+			throw new IllegalArgumentException("category was null.");
+		categories.remove(category);
+	}
+
 	public Set<RecipeCategory> getCategories() {
-		for (RecipeCategory c : categories)
-			System.out.println(c.getName());
 		return categories;
 	}
 
@@ -119,6 +129,9 @@ public class Recipe {
 		if (categories == null) {
 			categories = new HashSet<>();
 		}
-		this.categories = categories;
+		this.categories = new HashSet<>();
+		for(RecipeCategory c : categories) {
+			addCategory(c);
+		}
 	}
 }
